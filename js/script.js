@@ -23,13 +23,13 @@ Buon lavoro!
 let userAge = parseInt(prompt("Inserisci la tua età"));
 let userAgeValid = !isNaN(userAge) && 1 < userAge && userAge < 85;
 
-console.log("età utente:", userAge, typeof userAge);
+console.log("età utente:", userAge);
 
 /* richiesta numero km da percorrere */
 let travelKilometers = parseInt(prompt("Inserisci totale km da percorrere"));
 let travelKilometersValid = !isNaN(travelKilometers);
 
-console.log("km da percorrere:", travelKilometers, typeof travelKilometers);
+console.log("km da percorrere:", travelKilometers);
 
 /* risultato prezzo viaggio NO SCONTO*/
 const totPrizeNoDiscounted = travelKilometers * 0.21;
