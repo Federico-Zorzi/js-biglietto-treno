@@ -20,15 +20,19 @@ Buon lavoro!
 
 // # RACCOLTA DATI
 /* richiesta età passeggero */
-let userAge = prompt("Inserisci la tua età");
-console.log("età utente:", userAge);
+let userAge = parseInt(prompt("Inserisci la tua età"));
+let userAgeValid = !isNaN(userAge) && 1 < userAge && userAge < 85;
+
+console.log("età utente:", userAge, typeof userAge);
 
 /* richiesta numero km da percorrere */
-let travelKilometers = prompt("Inserisci totale km da percorrere");
-console.log("km da percorrere:", travelKilometers);
+let travelKilometers = parseInt(prompt("Inserisci totale km da percorrere"));
+let travelKilometersValid = !isNaN(travelKilometers);
+
+console.log("km da percorrere:", travelKilometers, typeof travelKilometers);
 
 /* risultato prezzo viaggio NO SCONTO*/
-let totPrizeNoDiscounted = travelKilometers * 0.21;
+const totPrizeNoDiscounted = travelKilometers * 0.21;
 console.log("totale prezzo viaggio senza sconto:", totPrizeNoDiscounted);
 
 /* sconto under 18*/
@@ -46,29 +50,31 @@ let totPrizeDiscounted;
 // # ELABORAZIONE
 /* calcolo prezzo totale viaggio in base ai km inseriti NO SCONTO APPLICATO */
 
-/* SE età passeggero è minore di 18 */
-if (userAge <= 18) {
-  /* calcolo il 20% di sconto sul prezzo totale del biglietto */
-  totDiscount = (totPrizeNoDiscounted * discountUnder18) / 100;
+/* SE età passeggero AND chilometri da percorrere sono validi */
+if (userAgeValid && travelKilometersValid) {
+  /* SE età passeggero è minore di 18 */
+  if (userAge <= 18) {
+    /* calcolo il 20% di sconto sul prezzo totale del biglietto */
+    totDiscount = (totPrizeNoDiscounted * discountUnder18) / 100;
 
-  /* sottraggo il valore dello sconto precedentemente calcolato al totale del biglietto non scontato */
-  totPrizeDiscounted = totPrizeNoDiscounted - totDiscount;
+    /* sottraggo il valore dello sconto precedentemente calcolato al totale del biglietto non scontato */
+    totPrizeDiscounted = totPrizeNoDiscounted - totDiscount;
+  } else if (userAge >= 65) {
+    /* ALTRIMENTI SE età passeggero è maggiore di 65 */
+    /* calcolo il 40% di sconto sul prezzo totale del biglietto */
+    totDiscount = (totPrizeNoDiscounted * discountOver65) / 100;
 
-  console.log("totale prezzo viaggio con sconto under18:", totPrizeDiscounted);
-} else if (userAge >= 65) {
-  /* ALTRIMENTI SE età passeggero è maggiore di 65 */
-  /* calcolo il 40% di sconto sul prezzo totale del biglietto */
-  totDiscount = (totPrizeNoDiscounted * discountOver65) / 100;
+    /* sottraggo il valore dello sconto precedentemente calcolato al totale del biglietto non scontato */
+    totPrizeDiscounted = totPrizeNoDiscounted - totDiscount;
+  } else {
+    /* ALTRIMENTI il totale del prezzo non scontato equivale al prezzo definitivo */
+    totPrizeDiscounted = totPrizeNoDiscounted;
+  }
 
-  /* sottraggo il valore dello sconto precedentemente calcolato al totale del biglietto non scontato */
-  totPrizeDiscounted = totPrizeNoDiscounted - totDiscount;
-
-  console.log("totale prezzo viaggio con sconto over65:", totPrizeDiscounted);
+  // # OUTPUT
+  /* stampa prezzo totale del viaggio con massimo 2 decimali */
+  alert("totale prezzo viaggio: " + totPrizeDiscounted + " €");
 } else {
-  /* ALTRIMENTI il totale del prezzo non scontato equivale al prezzo definitivo */
-  totPrizeDiscounted = totPrizeNoDiscounted;
+  // # OUTPUT
+  alert("Valori inseriti dall'utente non validi");
 }
-
-// # OUTPUT
-/* stampa prezzo totale del viaggio con massimo 2 decimali */
-alert("totale prezzo viaggio con sconto: " + totPrizeDiscounted + " €");
