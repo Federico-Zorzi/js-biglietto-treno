@@ -1,4 +1,4 @@
-// # TRACCIA
+// * TRACCIA
 
 /*
 Ciao ragazzi,
@@ -16,65 +16,71 @@ Questo richiederà un minimo di ricerca.
 Buon lavoro!
 */
 
-// # PROCEDURA
+// * PROCEDURA
 
-// # RACCOLTA DATI
-/* richiesta età passeggero */
+// ! RACCOLTA DATI
+// * richiesta età passeggero
 let userAge = parseInt(prompt("Inserisci la tua età"));
-let userAgeValid = !isNaN(userAge) && 1 < userAge && userAge < 85;
+let isUserAgeValid = !isNaN(userAge) && userAge > 0 && userAge < 110;
 
 console.log("età utente:", userAge);
 
-/* richiesta numero km da percorrere */
+// * richiesta numero km da percorrere
 let travelKilometers = parseInt(prompt("Inserisci totale km da percorrere"));
-let travelKilometersValid = !isNaN(travelKilometers);
+let isTravelKilometersValid = !isNaN(travelKilometers);
 
 console.log("km da percorrere:", travelKilometers);
 
-/* risultato prezzo viaggio NO SCONTO*/
-const totPrizeNoDiscounted = travelKilometers * 0.21;
-console.log("totale prezzo viaggio senza sconto:", totPrizeNoDiscounted);
+// * risultato prezzo viaggio NO SCONTO
+const totPriceNoDiscounted = travelKilometers * 0.21;
+console.log("totale prezzo viaggio senza sconto:", totPriceNoDiscounted);
 
-/* sconto under 18*/
-const discountUnder18 = 20;
+// * sconto under 18
+const discountPercUnder18 = 20;
 
-/* sconto over 65*/
-const discountOver65 = 40;
+// * sconto over 65
+const discountPercOver65 = 40;
 
-/* calcolo sconto */
+// * calcolo sconto
 let totDiscount;
 
-/* risultato prezzo viaggio CON SCONTO*/
-let totPrizeDiscounted;
+// * risultato prezzo viaggio CON SCONTO
+let totPriceDiscounted;
 
-// # ELABORAZIONE
-/* calcolo prezzo totale viaggio in base ai km inseriti NO SCONTO APPLICATO */
+// * messaggio finale
+let outputMsg;
 
-/* SE età passeggero AND chilometri da percorrere sono validi */
-if (userAgeValid && travelKilometersValid) {
-  /* SE età passeggero è minore di 18 */
+// ! ELABORAZIONE
+// * calcolo prezzo totale viaggio in base ai km inseriti NO SCONTO APPLICATO
+
+// ? SE età passeggero AND chilometri da percorrere sono validi
+if (isUserAgeValid && isTravelKilometersValid) {
+  // * SE età passeggero è minore di 18
   if (userAge <= 18) {
-    /* calcolo il 20% di sconto sul prezzo totale del biglietto */
-    totDiscount = (totPrizeNoDiscounted * discountUnder18) / 100;
+    // * calcolo il 20% di sconto sul prezzo totale del biglietto
+    totDiscount = (totPriceNoDiscounted * discountPercUnder18) / 100;
+    // * sottraggo il valore dello sconto precedentemente calcolato al totale del biglietto non scontato
+    totPriceDiscounted = totPriceNoDiscounted - totDiscount;
 
-    /* sottraggo il valore dello sconto precedentemente calcolato al totale del biglietto non scontato */
-    totPrizeDiscounted = totPrizeNoDiscounted - totDiscount;
+    // * ALTRIMENTI SE età passeggero è maggiore di 65
   } else if (userAge >= 65) {
-    /* ALTRIMENTI SE età passeggero è maggiore di 65 */
-    /* calcolo il 40% di sconto sul prezzo totale del biglietto */
-    totDiscount = (totPrizeNoDiscounted * discountOver65) / 100;
-
-    /* sottraggo il valore dello sconto precedentemente calcolato al totale del biglietto non scontato */
-    totPrizeDiscounted = totPrizeNoDiscounted - totDiscount;
+    // * calcolo il 40% di sconto sul prezzo totale del biglietto
+    totDiscount = (totPriceNoDiscounted * discountPercOver65) / 100;
+    // * sottraggo il valore dello sconto precedentemente calcolato al totale del biglietto non scontato
+    totPriceDiscounted = totPriceNoDiscounted - totDiscount;
   } else {
-    /* ALTRIMENTI il totale del prezzo non scontato equivale al prezzo definitivo */
-    totPrizeDiscounted = totPrizeNoDiscounted;
+    // * ALTRIMENTI il totale del prezzo non scontato equivale al prezzo definitivo
+    totPriceDiscounted = totPriceNoDiscounted;
   }
 
-  // # OUTPUT
-  /* stampa prezzo totale del viaggio con massimo 2 decimali */
-  alert("totale prezzo viaggio: " + totPrizeDiscounted + " €");
-} else {
-  // # OUTPUT
-  alert("Valori inseriti dall'utente non validi");
+  outputMsg = "totale prezzo viaggio: " + totPriceDiscounted.toFixed(2) + " €";
 }
+
+// ? ALTRIMENTI il messaggio di errore
+else {
+  outputMsg = "Valori inseriti dall'utente non validi";
+}
+
+// ! OUTPUT
+// * stampa prezzo totale del viaggio con massimo 2 decimali
+alert(outputMsg);
